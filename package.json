@@ -1,0 +1,27 @@
+{
+  "name": "polares",
+  "version": "1.0.0",
+  "author": "",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "lint": "run-s lint:tsc lint:prettier lint:eslint",
+    "lint:eslint": "eslint --fix \"src/**/*.ts\"",
+    "lint:prettier": "prettier --write .",
+    "lint:tsc": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "eslint": "^9.19.0",
+    "eslint-plugin-mist3rbru": "^0.6.4",
+    "npm-run-all2": "^7.0.2",
+    "prettier": "^3.4.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
