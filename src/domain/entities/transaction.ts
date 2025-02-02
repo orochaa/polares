@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import { InvalidParamError } from './errors.js'
+import { Category } from './category.js'
 
 export class Transaction {
   private readonly props: Transaction.Props
@@ -23,6 +24,8 @@ export class Transaction {
       value: value,
       description: params.description,
       createdAt: new Date(params.createdAt),
+
+      category: params.category && new Category(params.category),
     }
   }
 
@@ -42,12 +45,23 @@ export class Transaction {
     return this.props.value
   }
 
+  get currencyValue(): string {
+    return this.props.value.toLocaleString(undefined, {
+      currency: 'USD',
+      minimumFractionDigits: 2,
+    })
+  }
+
   get description(): string {
     return this.props.description
   }
 
   get createdAt(): Date {
     return this.props.createdAt
+  }
+
+  get category(): Category | undefined {
+    return this.props.category
   }
 
   static create(params: Transaction.CreateParams): Transaction {
@@ -64,27 +78,13 @@ export class Transaction {
   static createBuy(
     params: Omit<Transaction.CreateParams, 'type'>
   ): Transaction {
-    return new Transaction({
-      id: randomUUID(),
-      categoryId: params.categoryId,
-      type: 'BUY',
-      value: params.value,
-      description: params.description,
-      createdAt: new Date(),
-    })
+    return this.create({ ...params, type: 'BUY' })
   }
 
   static createSell(
     params: Omit<Transaction.CreateParams, 'type'>
   ): Transaction {
-    return new Transaction({
-      id: randomUUID(),
-      categoryId: params.categoryId,
-      type: 'SELL',
-      value: params.value,
-      description: params.description,
-      createdAt: new Date(),
-    })
+    return this.create({ ...params, type: 'SELL' })
   }
 }
 
@@ -96,6 +96,8 @@ export namespace Transaction {
     value: number
     description: string
     createdAt: Date
+
+    category: Category | undefined
   }
 
   export interface Params {
@@ -105,6 +107,8 @@ export namespace Transaction {
     value: string | number
     description: string
     createdAt: Date | string
+
+    category?: Category.Params
   }
 
   export interface CreateParams {

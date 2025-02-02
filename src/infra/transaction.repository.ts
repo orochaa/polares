@@ -10,4 +10,22 @@ export class TransactionRepository {
       data: TransactionMapper.toPrisma(data),
     })
   }
+
+  async listLatestRecords(date: Date): Promise<Transaction[]> {
+    const data = await this.db.transaction.findMany({
+      where: {
+        createdAt: {
+          lte: date,
+        },
+      },
+      include: {
+        category: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    })
+
+    return TransactionMapper.mapToDomain(data)
+  }
 }

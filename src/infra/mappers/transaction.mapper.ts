@@ -16,4 +16,8 @@ export const TransactionMapper = {
   toDomain(data: TransactionPrisma): Transaction {
     return new Transaction(data)
   },
+
+  mapToDomain(data: TransactionPrisma[]): Transaction[] {
+    return data.map(d => this.toDomain(d))
+  },
 }
