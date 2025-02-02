@@ -24,6 +24,7 @@
     "paths": {
       "@/tests/*": ["__tests__/*"],
       "@/*": ["src/*"]
-    }
+    },
+    "types": ["vitest/globals"]
   }
 }

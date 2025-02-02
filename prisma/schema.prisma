@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id        String   @id
+  name      String @unique
+  createdAt DateTime
+
+  transactions Transaction[]
+}
+
+model Transaction {
+  id          String   @id
+  categoryId  String
+  type        String
+  value       Float
+  description String
+  createdAt   DateTime
+
+  category Category @relation(fields: [categoryId], references: [id])
+}
