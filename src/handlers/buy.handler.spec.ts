@@ -4,8 +4,8 @@ import type { TransactionRepository } from '@/infra/transaction.repository.js'
 import { Category } from '@/domain/entities/category.js'
 import { mockCategory } from '@/tests/mocks.js'
 
-const makeSut = (): BuyHandler => {
-  return new BuyHandler(
+const makeSut = () =>
+  new BuyHandler(
     {
       findByName: vi.fn(),
       create: vi.fn(),
@@ -14,7 +14,6 @@ const makeSut = (): BuyHandler => {
       create: vi.fn(),
     } as unknown as TransactionRepository
   )
-}
 
 describe('BuyHandler', () => {
   it('should create an Other category', async () => {

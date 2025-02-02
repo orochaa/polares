@@ -1,7 +1,7 @@
 import { InvalidParamError } from './domain/entities/errors.js'
 
 export class Router {
-  private readonly actions: Map<string, Handler>
+  readonly actions: Map<string, Handler>
 
   constructor() {
     this.actions = new Map()

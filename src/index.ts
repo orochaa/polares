@@ -6,15 +6,19 @@ import { BaseError, InternalServerError } from './domain/entities/errors.js'
 import { BuyHandler } from './handlers/buy.handler.js'
 import { CategoryRepository } from './infra/category.repository.js'
 import { TransactionRepository } from './infra/transaction.repository.js'
+import { HelpHandler } from './handlers/help.handler.js'
 
 function setupRouter(): Router {
+  const router = new Router()
+
   const db = new PrismaClient()
   const categoryRepository = new CategoryRepository(db)
   const transactionRepository = new TransactionRepository(db)
 
+  const helpHandler = new (HelpHandler.bind(router))()
   const buyHandler = new BuyHandler(categoryRepository, transactionRepository)
 
-  const router = new Router()
+  router.register('help', helpHandler)
   router.register('buy', buyHandler)
 
   return router

@@ -1,3 +1,9 @@
 interface Handler {
-  handle(message: string, reply: (response: string) => void): Promise<void>
+  description: string
+  example: string
+
+  handle(
+    message: string,
+    reply: (response: string) => void
+  ): void | Promise<void>
 }

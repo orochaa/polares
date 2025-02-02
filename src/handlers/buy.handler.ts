@@ -4,6 +4,14 @@ import type { CategoryRepository } from '@/infra/category.repository.js'
 import type { TransactionRepository } from '@/infra/transaction.repository.js'
 
 export class BuyHandler implements Handler {
+  readonly description = 'Register a buy action'
+  readonly example = [
+    'Buy',
+    '25 (price)',
+    'Dinner from IFood (description)',
+    'Food (category)',
+  ].join('\n')
+
   constructor(
     readonly categoryRepository: CategoryRepository,
     readonly transactionRepository: TransactionRepository
